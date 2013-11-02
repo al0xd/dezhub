@@ -1,4 +1,4 @@
 <?php 
-interface InterfacePage{
+interface InterfaceLayout{
 	public function run();
 }
