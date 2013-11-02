@@ -1,0 +1,1 @@
+<h2>Xin chào {$home.dz_title}</h2>
