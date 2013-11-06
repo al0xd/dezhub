@@ -338,7 +338,7 @@ $conn->UpdateBlob('blobtable','blobcol',$blobvalue,'id=1');
   you have separate Sybase, Intebase, MySQL, etc files, and conditionally include 
   the SQL based on the database. For example, each MySQL SQL statement would be 
   stored in a separate variable, in a file called 'mysql-lang.inc.php'.</p>
-<pre>$sqlGetPassword = '<font color="#993300">select password from dz_users where userid=%s</font>';
+<pre>$sqlGetPassword = '<font color="#993300">select password from users where userid=%s</font>';
 $sqlSearchKeyword = quot;<font color="#993300">SELECT * FROM articles WHERE match (title,body) against (%s</font>)&quot;;</pre>
 <p>In our main PHP file:</p>
 <pre><font color=green># define which database to load...</font>
