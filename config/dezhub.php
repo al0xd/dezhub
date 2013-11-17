@@ -4,7 +4,6 @@
 ******************************************************************************************   
 
   Package            : Dezhub  [ Web Application Framework ]
-  Version            : 2.0.1
       
   Lead Architect     : Hung Dinh. [ dinhhungvn@gmail.com ]     
   Year               : 2013 - 2014                                                      
@@ -106,5 +105,5 @@
 			loadModule( $mod, $task );
 		}else{
 			// layout module
-			loadModule("layout");
+			loadModule("index");
 		}

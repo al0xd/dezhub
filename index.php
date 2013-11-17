@@ -3,7 +3,6 @@
 ******************************************************************************************   
 
   Package            : Dezhub  [ Web Application Framework ]
-  Version            : 2.0.1
       
   Lead Architect     : Hung Dinh. [ dinhhungvn@gmail.com ]     
   Year               : 2013 - 2014                                                      
@@ -46,7 +45,7 @@
 		// set time zone default
 		date_default_timezone_set("Asia/Ho_Chi_Minh"); 
 		//define version
-		define("VER", "2.0.1");
+		define("VER", "1.0.2");
 /**
 	define web root
 */	
