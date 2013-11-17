@@ -35,11 +35,6 @@
 
 class Index extends BaseIndex implements IntefaceIndex
 {	
-	function run($task= "")
-	{
-		$this->s->display("helloworld".TPL);
-	}
-
 }
 
 ?>

@@ -55,7 +55,6 @@
 
 */
 		require_once(SITE_DIR."config/smarty".____EXTPHP);
-		require_once(SITE_DIR."config/pear_quickform".____EXTPHP);
 		
 /*
 	@ Thiet lap cac lop co so  cho du lieu
@@ -75,25 +74,12 @@
 
 
 
-/**
-*/		
-		getDefaultLang($_GET["lang"]);
-		
-/*//
-
-// @ Load language.conf
-
-//
-
-//-------------------------------------------------------
-
-*/
 //-------------------------------------
 
 // @ Common function
 
 //------------------------	
-	$oSmarty->configLoad($_SESSION["lang_file"]);
+		$oSmarty->configLoad("vn.conf");
 		if(isset($_GET['mod'])){
 			$mod = $_GET['mod'];
 		}

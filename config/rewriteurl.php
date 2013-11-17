@@ -37,11 +37,6 @@ class rewrite_url{
 	var $list_url;
 	function __construct(){
 		$i=0;
-		if(checkMultiLang()){
-			$langk="[A-z-]+/";
-			$langt="&lang=[0]";
-			$i=1;
-		}
 		self::add_rule(array(
 			"{$langk}news"=>"mod=post&task=home{$langt}"
 		));
