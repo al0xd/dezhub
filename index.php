@@ -106,7 +106,7 @@
 	define CACHE DATA
 */	
 
-	define('CACHE_DATA', true); // false tat cache, true bat cache 
+	define('CACHE_DATA', false); // false tat cache, true bat cache 
 	define('CACHE_TIME', 86400); // thoi gian luu cache, chi tac dung khi cache duoc bat
 		
 		

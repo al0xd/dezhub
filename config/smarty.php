@@ -52,7 +52,6 @@
 
 //		$oSmarty->debugging = false;
 		$oSmarty->setTemplateDir("application/view");
-				
 		$oSmarty->setConfigDir( "languages")
 		->setCompileDir(PUBLICFOLDER ."/templates_c")
 		->setCacheDir(PUBLICFOLDER ."/cache");

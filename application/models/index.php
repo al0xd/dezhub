@@ -13,7 +13,6 @@ class BaseIndex extends Module_Base
 	{
 		$home = $this->dezDB->getRow(1);
 		$this->s->assign("home",$home);
-		$url = md5(json_encode($_REQUEST));
 		$this->s->display("helloworld".TPL);
 	}
 
