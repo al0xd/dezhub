@@ -33,49 +33,11 @@
 ******************************************************************************************   
 */
 
-class Layout
+class Index extends BaseIndex implements IntefaceIndex
 {	
 	function run($task= "")
 	{
-		global $oSmarty;
-	//	$modul = "home";
-		if(!isset($_GET['mod'])){
-			$_REQUEST['mod']='home';
-			$_GET['mod']='home';
-		}
-		$modul = $_REQUEST['mod'];
-		if(!isset($_GET['task'])){
-			$_REQUEST['task']='undefine';
-			$_GET['task']='undefine';
-		}
-		$aPageinfo = $this->getPageinfo($modul, $task);							
-		$oSmarty->assign("aPageinfo",$aPageinfo);	
-		//$url= md5(selfURL());
-		$url = md5(json_encode($_REQUEST));
-		if( is_file(VIEWPATH."layout/{$modul}".TPL)){
-				$oSmarty->display("{$modul}".TPL,$url);
-		}else{
-				$oSmarty->display("default".TPL,$url);
-		}
-	}
-
-	function getPageinfo($modul='home', $task="")
-	{		
-		if(file_exists(CONTROLPATH.$modul.____EXTPHP)) {
-			
-			if(file_exists(MODELPATH.$modul.____EXTPHP)) {
-				require_once(MODELPATH.$modul.____EXTPHP);
-			}
-			if(file_exists(INFACEPATH.$modul.____EXTPHP)) {
-				require_once(INFACEPATH.$modul.____EXTPHP);
-			}
-			require_once(CONTROLPATH.$modul.____EXTPHP);
-			$namespace  = ucfirst($modul);
-			$mod = new $namespace();
-			if(method_exists($mod,"getPageinfo"))
-				$aPageinfo = $mod->getPageinfo($task);
-		}
-		return $aPageinfo;
+		$this->s->display("helloworld".TPL);
 	}
 
 }
