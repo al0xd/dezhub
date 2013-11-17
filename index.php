@@ -50,7 +50,6 @@
 	define web root
 */	
 		define('PUBLICFOLDER', 'public');
-		define('TEMP', 1);
 
 
 
@@ -107,13 +106,13 @@
 	define CACHE DATA
 */	
 
-	define('CACHE_DATA', false); // false tat cache, true bat cache 
+	define('CACHE_DATA', true); // false tat cache, true bat cache 
 	define('CACHE_TIME', 86400); // thoi gian luu cache, chi tac dung khi cache duoc bat
 		
 		
 		
 	require_once(SITE_DIR."config/dezhub.php");
-	$oSmarty->clearCache(null,"page");
+//	$oSmarty->clearCache(null,"page");
 
 /** 
 

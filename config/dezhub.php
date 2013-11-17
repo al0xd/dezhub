@@ -80,16 +80,5 @@
 
 //------------------------	
 		$oSmarty->configLoad("vn.conf");
-		if(isset($_GET['mod'])){
-			$mod = $_GET['mod'];
-		}
-		if(isset($_GET['task']))	{
-			$task = $_GET['task'];
-		}
-		if(isset($_GET['ajax'])){
-			// when run ajax scripts
-			loadModule( $mod, $task );
-		}else{
 			// layout module
-			loadModule("index");
-		}
+		loadModule("index");
