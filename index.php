@@ -3,7 +3,7 @@
 ******************************************************************************************   
 
   Package            : Dezhub  [ Web Application Framework ]
-  Version            : 1.0
+  Version            : 2.0.1
       
   Lead Architect     : Hung Dinh. [ dinhhungvn@gmail.com ]     
   Year               : 2013 - 2014                                                      
@@ -39,18 +39,19 @@
 
 		ob_start();
 		session_start(true);
-//		error_reporting(E_ALL ^ E_NOTICE);
+		error_reporting(E_ALL ^ E_NOTICE);
 //		error_reporting(E_ERROR | E_PARSE);
 //		ini_set("display_errors",false);
 		define("SITE_DIR", dirname(__FILE__)."/");
 		// set time zone default
 		date_default_timezone_set("Asia/Ho_Chi_Minh"); 
 		//define version
-		define("VER", "1.0");
+		define("VER", "2.0.1");
 /**
 	define web root
 */	
 		define('PUBLICFOLDER', 'public');
+		define('TEMP', 1);
 
 
 
@@ -67,17 +68,6 @@
  * NO TRAILING SLASH!
  *
  */
-/* 
-*define SITE PATH 
-*
-*/	
-	define("SITE_URL", "http://{$_SERVER['SERVER_NAME']}/");
-	
-/* 
-*define Application PATH 
-*
-*/	
-	
 	$application_folder = 'application';
 	define('APPPATH', SITE_DIR.$application_folder.'/');
 /* 
@@ -118,8 +108,8 @@
 	define CACHE DATA
 */	
 
-	define('CACHE_DATA', true); // false tat cache, true bat cache 
-	define('CACHE_TIME', 10); // thoi gian luu cache, chi tac dung khi cache duoc bat
+	define('CACHE_DATA', false); // false tat cache, true bat cache 
+	define('CACHE_TIME', 86400); // thoi gian luu cache, chi tac dung khi cache duoc bat
 		
 		
 		

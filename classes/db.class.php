@@ -3,7 +3,7 @@
 ******************************************************************************************   
 
   Package            : Dezhub  [ Web Application Framework ]
-  Version            : 1.0
+  Version            : 2.0.1
       
   Lead Architect     : Hung Dinh. [ dinhhungvn@gmail.com ]     
   Year               : 2013 - 2014                                                      
@@ -94,11 +94,19 @@ class Dez_Db
 	 */
 
 	public function setTable($table)
+
 	{
+
 		$this->table = $table;
+
 		$this->hasPrimaryKey = false;
+
 		$this->hasForeignKey = false;
-	//	$this->analyzeTable();
+
+		
+
+		$this->analyzeTable();
+
 	}
 
 	
@@ -899,7 +907,7 @@ class Dez_Db
 
 				//date is pear type
 
-				//datetime is type :)
+				//datetime is bsg type :)
 
 				$array['InputType'] = 'datetime';
 
@@ -1128,31 +1136,6 @@ class Dez_Db
 
     }
 
-    
-
-    
-
-	
-
-	/**
-
-	 * Lấy dư liệu từ bản 
-
-	 *
-
-	 * @param Mảng các trư�?ng muốn lấy ra array $fieds
-
-	 * @param đi�?u kiện l�?c string $where
-
-	 * @param các thông tin thêm string  $params
-
-	 * @return mảng các giá trị
-
-	 */
-
-	
-
-	
 	public function getAssocSql($sql){
 		if(isCache())
 			$res = $this -> adoDb -> CacheGetAssoc($sql, false);

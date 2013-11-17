@@ -1,0 +1,357 @@
+<div class="row-fluid"><div class="span12">
+
+
+<div class="portlet box grey">
+<div class="portlet-title">
+<div class="caption"><i class="icon-globe"></i><em>Bảng dữ liệu</em></div>
+
+<div class="actions">
+{if $object->aTask}
+{if $object->aTask[0].task =='add'}
+<a href="?{$object->sSubmitUrl}&task={$object->aTask[0].task}" id="sample_editable_1_new" class="btn blue">Thêm mới <i class="icon-plus"></i>
+</a>
+{else}<div class="btn-group"><a href="javacript:" class="btn disabled">Ẩn quyền</a></div>{/if}
+{/if}
+{if $object->aTaskAll && $arr_value!=''}
+<div class="btn-group">
+<a class="btn green" href="#" data-toggle="dropdown">
+<i class="icon-cogs"></i> Tools
+<i class="icon-angle-down"></i>
+</a>
+<ul class="dropdown-menu pull-right">
+{foreach from=$object->aTaskAll item=item}
+{if $item}
+<li><a href="javascript:"  onclick="event_check('{$item.task}','{$item.confirm|default:'Are you sure?'}');"><i class="icon-pencil"></i> {$item.display}</a></li>
+{else}
+<li><a href="javascript:" class="btn disabled"><i class="icon-pencil"></i>Ẩn quyền</a></li>
+{/if}
+
+{/foreach}
+</ul>
+		
+</div>{/if}
+
+</div> 
+                                
+                                
+							</div>
+		
+ <div class="portlet-body">
+								<div class="table-toolbar">
+									
+									
+								</div>
+
+
+
+
+								<div id="TableGrid_wrapper" class="dataTables_wrapper form-inline" role="grid">
+                                    
+        
+<form name="for_datagrid" action="?{$object->sSubmitUrl}" method="get" style="margin:0px;">
+			{if $object->aFilter}  
+			<div class="row-fluid" style="padding:10px 0; font-style:italic;">
+            {foreach item=row from=$object->aFilter name=filter}
+  <div class="span4"><div class="dataTables_length"><label>{if $row.display!=''}{$row.display}:{/if}
+  
+  {if $row.type == 'date'}
+   {* <input type="text" name="{if $row.name != ''}{$row.name}{else}{$row.field}{/if}" id="{if $row.name != ''}{$row.name}{else}{$row.field}{/if}" value="{$row.selected}" {if $row.style != ''} style="{$row.style}"{/if} readonly/>
+    <img src="{$path}/calendar/images/lich.gif" id="img_{$smarty.foreach.filter.index}" onclick="displayCalendar(document.getElementById({if $row.name != ''}'{$row.name}'{else}'{$row.field}'{/if}),'yyyy-mm-dd',this)" />
+	*}					
+<div class="input-append date date-picker" data-date-format="{$row.format|default:'yyyy-mm-dd'}" data-date-viewmode="years">
+<input  name="{if $row.name != ''}{$row.name}{else}{$row.field}{/if}" value="{$row.selected}" {if $row.style != ''}
+ style="{$row.style}"{/if} class="m-wrap m-ctrl-medium date-picker"  onKeyPress="if(event.keyCode==13) for_datagrid.submit();" size="10" type="text" value="" /><span class="add-on"><i class="icon-calendar"></i></span>
+</div>
+
+
+                        {elseif $row.type=='text' || $row.type=='number'}
+							<input  onKeyPress="if(event.keyCode==13) for_datagrid.submit();" type="text" name="{if $row.name != ''}{$row.name}{else}{$row.field}{/if}" value="{$row.selected}" style="{$row.style}" />
+						{elseif $row.type=='group'}
+						<select name="{$row.name}_group" id="{$row.name}_group" {if $row.style != ''} style="{$row.style}"{/if}>
+							<option value="">--- Filter by ---</option>
+							{foreach from=$row.field item=item key=field}
+							<option value="{$field}" {if $field==$row.fgroup_by} selected{/if}>{$item[0]}</option>
+							{/foreach}
+						</select>
+							<input type="text" name="{$row.name}" value="{$row.selected}" style="{$row.style}" />
+						{else}
+						<select name="{if $row.name != ''}{$row.name}{else}{$row.field}{/if}" id="{if $row.name != ''}{$row.name}{else}{$row.field}{/if}" {if $row.style != ''} style="{$row.style}"{/if}  onchange="document.for_datagrid.submit();" >
+							{if $row.option_string == ''}
+								<option value="">--- {#all#} ---</option>
+								{html_options options = $row.options selected = $row.selected}							
+							{else}
+								{$row.option_string}
+							{/if}
+						</select>
+						{/if}
+  
+  </label></div></div>
+  {/foreach} 
+</div>
+			  {/if}
+	{if $object->sMessage != ''}	
+
+<div class="alert pulsate-regular" style="text-align:center;">
+<button class="close" data-dismiss="alert"></button>
+{$object->sMessage}
+</div>
+
+	{/if}
+
+
+
+<table class="table table-striped table-hover table-bordered dataTable" id="TableGrid">
+    
+    <thead><tr class="success">
+		{if $object->aTaskAll}
+        <th style="width: 24px;" class="" role="columnheader" rowspan="1"
+         colspan="1" aria-label="">
+         		{if $object->aTaskAll && $arr_value!=''}
+            <input type="checkbox" class="group-checkable" title="Chọn tất cả" data-set="#TableGrid .checkboxes" />			
+		{else}
+			&nbsp;
+		{/if}
+
+         
+         </th>
+        {/if}
+		{if !$object->hideIndex}<td style="width:24px" class="center">#</td>{/if}
+		{foreach item=row from=$object->aField}
+			{if $row.visible != 'hidden'}			
+				<th class="hidden-480" style="{if $row.width}width:{$row.width}px;{/if}">
+                {$row.display}
+				{if $row.sortable}
+                {if ($sort_by==$row.field) && ($sort_value=='asc')}
+                <div onclick="sortData('{$row.field}','desc')" class="sorting_asc dz-sorting">&nbsp;</div>
+                {elseif ($sort_by==$row.field) && ($sort_value=='desc')}
+                <div onclick="sortData('{$row.field}','asc')" class="sorting_desc dz-sorting">&nbsp;</div>
+                {else}
+                <div onclick="sortData('{$row.field}','asc')" class="sorting dz-sorting">&nbsp;</div>
+                {/if}
+                {/if}
+              
+                
+                
+				{if $row.datatype == 'order' && $arr_value!=''}
+					<img src="{$path}/images/save.png" class="tooltips" style="cursor:pointer" title="{#save_order#}" border="0" onclick="save_order('{$row.task|default:save_order}');"/>
+				{/if}
+				</th>
+			{/if}
+		{/foreach}	
+{section loop=$object->aTask start=1 name=foo}
+
+        <th></th>{/section}
+	</tr>
+    
+    </thead>
+	<tbody role="alert" aria-live="polite" aria-relevant="all">
+	{foreach name=value item=row from=$arr_value}		
+	<tr class="gradeX {if $smarty.foreach.value.index % 2 ==0}even{else} odd{/if}">
+		{if $object->aTaskAll}
+		<td class=" sorting_1">
+			<input type="checkbox" class="checkboxes" name="arr_check[]" id="check_{$smarty.foreach.value.index}" value="{$row[$pkey]}" />
+        
+		</td>
+		{/if}
+		
+		{if !$object->hideIndex}<td align="center">{$smarty.foreach.value.index+$index_start}</td>{/if}
+		
+		{foreach key=key item=item from=$object->aField name=col}
+			{if isset($item.visible) || $item.visible == '' || $item.visible != 'hidden'}				
+				<td class="cented" style="{if $item.style!=''}{$item.style}{/if}">
+				{if $item.link != ''}<a href="{$item.link}&id={$row[$pkey]}">{/if}
+				{if $item.value_cores != ''}
+					{foreach key=ref item=cor from=$item.value_cores}
+						{if $ref == $row[$item.field]}
+							{$cor}
+						{/if}					
+					{/foreach}
+				{else}
+					{if $item.datatype=='img'}
+						{if $row[$item.field] != ''}						
+						<a href="{$item.img_path}{$row[$item.field]}" class="fancybox-button" data-rel="fancybox-button">
+                            <div class="zoom">
+                            {$row[$item.field]|flashPhoto:$item.img_path:$row[$item.tooltip]}
+                            <div class="zoom-icon"></div>
+                            </div>
+						</a>
+                                            
+						{else}&nbsp;{/if}
+					{elseif $item.datatype=='boolean'}
+						{if $row[$item.field]=='1' || $row[$item.field]=='t' ||$row[$item.field]=='active' }
+							<img src="{$path}/images/active.gif" border="0">
+						{else}
+							<img src="{$path}/images/deactive.gif" border="0">
+						{/if}
+					{elseif $item.datatype=='publish'}
+						{if $row[$item.field]=='1' || $row[$item.field]=='t' ||$row[$item.field]=='active' }
+							<img class="tooltips" src="{$path}/images/active.gif" border="0" alt="unpublish" style="cursor:pointer" title="{#unpublish_item#}" onclick="doPublish('index.php?{$object->sSubmitUrl}&task={$item.task|default:'change_status'}&field={$item.field}&id={$row[$pkey]}&ajax', this);">
+						{else}
+							<img  class="tooltips" src="{$path}/images/deactive.gif" border="0" alt="publish"  style="cursor:pointer" title="{#publish_item#}" onclick="doPublish('index.php?{$object->sSubmitUrl}&task={$item.task|default:'change_status'}&field={$item.field}&id={$row[$pkey]}&ajax', this);">
+						{/if}
+					{elseif $item.datatype=='number'}
+						{$row[$item.field]|number_format:0:",":"."}	
+					{elseif $item.datatype=='date'}
+						{$row[$item.field]|echo_date:{$item.format|default:"Y-m-d h:i:s A"}}	
+					{elseif $item.datatype=='float'}
+						{$row[$item.field]|number_format:3:".":","}
+					{elseif $item.datatype=='order'}
+						<input style="width:{$item.width|default:50}px" type="text" name="{$item.field}[{$row[$pkey]}]" value="{$row[$item.field]}"/>
+					{elseif $item.datatype=='movie'}
+						{if $row[$item.field]!=''}
+							 <object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=9,0,28,0" width="{$item.img_size}" height="{$item.img_size}" hspace="8" vspace="20" align="absmiddle" id="flash">
+    <param name="movie" value="{$item.img_path}{$row[$item.field]}" />
+    <param name="quality" value="high" />
+    <param name="SCALE" value="noborder" /><param name="LOOP" value="false" /><param name="PLAY" value="false" />
+    <embed src="{$item.img_path}{$row[$item.field]}" width="{$item.img_size}" height="{$item.img_size}" hspace="8" vspace="20" loop="false" align="absmiddle" quality="high" pluginspage="http://www.adobe.com/shockwave/download/download.cgi?P1_Prod_Version=ShockwaveFlash" type="application/x-shockwave-flash" scale="noborder" play="true"></embed>
+  </object>{else} No movie{/if}
+					{else}
+						{$row[$item.field]|default:'&nbsp;'}
+					{/if}
+				{/if}
+				{if $item.link != ''}</a>{/if}	
+				</td>
+			{/if}
+		{/foreach}
+		{if  $object->aTask}
+		{section loop=$object->aTask name=foo start=1}{assign var=item value=$object->aTask[foo]}
+		<td style="width:{$object->iActionWidth}px;">
+			{if $item.task==""}
+            <a href="javascript:" class="btn mini disabled">Ẩn quyền</a>			
+            {else}
+			{if ($item.display == '') || ($item.display.operation == 'equal' && $row[$item.display.field]==$item.display.value) || ($item.display.operation == 'notequal' && $row[$item.display.field]!=$item.display.value)}			
+			{if $item.confirm || $item.action}
+             <a href="javascript:" title="{$item.tooltip}" onclick="{if $item.action!=''} {$item.action}('{$row[$pkey]}')
+             {else}
+						{if $item.field_cascade != '' && $row[$item.field_cascade] != '' && $row[$item.field_cascade] != 0} 
+							confirm_redirect('{$item.confirm_cascade}', '?{$object->sSubmitUrl}&task={$item.task}&id={$row[$pkey]}') 
+						{else}
+							 confirm_redirect('{$item.confirm}', '?{$object->sSubmitUrl}&task={$item.task}&id={$row[$pkey]}') 
+							 
+						{/if}	
+					{/if} 
+             " class="btn mini purple"><i class="{$item.icon}"></i> {$item.text}</a>
+           {else}
+            <a href="{$item.url|default:"?{$object->sSubmitUrl}&task={$item.task}"}&id={$row[$pkey]}" class="btn mini purple" title="{$item.tooltip}"><i class="{$item.icon}"></i> {$item.text}</a>
+            {/if}
+           
+			{/if}
+			{/if}
+		</td>
+		{/section}
+		{/if}
+	</tr>	
+	{foreachelse}
+	<tr>
+		<td style="text-align: center; color: #FF3333; padding: 15px; border-top: 1px solid gray;" colspan="{$number_cols+1}">
+			<strong>{#no_item#}</strong>
+		</td>
+	</tr>	
+	{/foreach}	
+	<tr class="success">
+		
+       <td colspan="1000" valign="middle" style="vertical-align:middle">
+		
+			
+		</td>
+	</tr></tbody>
+</table>
+<div class="row-fluid"><div class="span8">
+    <div class="row-fluid" style="font-style:italic;">
+    <div class="span4">
+    <label>{#total_item#}: <input type="text" style="width:50px" disabled="disabled" value="{$number_record}" /></label></label>
+    </div>
+    <div class="span4">
+    <label>Hiển thị <select onchange="for_datagrid.submit();" size="1" name="per_page" aria-controls="sample_1" style="width:70px !important" class="m-wrap small">
+    <option value="5" {if $smarty.request.per_page==5}selected="selected"{/if}>5</option>
+    <option value="20" {if $smarty.request.per_page==20 || !$smarty.request.per_page}selected="selected"{/if}>20</option>
+    <option value="40" {if $smarty.request.per_page==40}selected="selected"{/if}>40</option>
+    <option value="50" {if $smarty.request.per_page==50}selected="selected"{/if}>50</option>
+    <option value="100" {if $smarty.request.per_page==100}selected="selected"{/if}>100</option>
+    <option value="200" {if $smarty.request.per_page==200}selected="selected"{/if}>200</option>
+    <option value="500" {if $smarty.request.per_page==500}selected="selected"{/if}>500</option>
+    </select> phần tử/trang</label>
+    </div>
+    
+    <div class="span4">
+   <label> Chuyển đến 
+   <input type="text" title="Trang hiện tại" name="page" value="{$page|default:1}" style="width: 20px; text-align:center;" onKeyPress="if(event.keyCode==13) for_datagrid.submit();">
+ 	/ {$number_page} trang
+ </label>	
+    </div>
+    </div>
+</div><div class="span4">
+
+<div class="dataTables_paginate paging_bootstrap pagination">
+<ul>
+{if $page > 1}
+<li class="prev"><a href="javascript:" onClick="for_datagrid.page.value=1; for_datagrid.submit();" title="Trang đầu tiên">← <span class="hidden-480">Đầu</span></a></li>
+<li class="prev"><a href="javascript:" onClick="for_datagrid.page.value={$page-1}; for_datagrid.submit();" title="Trang trước"><span class="hidden-480">Trước</span></a></li>
+{else}
+<li class="prev disabled"><a href="#">← <span class="hidden-480">Đầu</span></a></li>
+<li class="prev disabled"><a href="#"><span class="hidden-480">Trước</span></a></li>
+{/if}
+{if $page < $number_page}
+<li class="next"><a  href="javascript:" onClick="for_datagrid.page.value={$page+1}; for_datagrid.submit();" ><span class="hidden-480">Sau</span></a></li>
+<li class="next"><a  href="javascript:" onClick="for_datagrid.page.value={$number_page}; for_datagrid.submit();"  ><span class="hidden-480">Cuối</span> →</a></li>
+{else}
+<li class="next disabled"><a href="#"><span class="hidden-480">Sau</span></a></li>
+<li class="next disabled"><a href="#"><span class="hidden-480">Cuối</span> →</a></li>
+{/if}
+
+</ul></div>
+
+{*
+
+
+<div class="dataTables_paginate paging_bootstrap pagination">
+
+				<div style="float:left;">{#item_per_page#}: <input class="tooltips" title="Số bản ghi trên 1 trang" name="per_page" value="{$per_page|default:10}" style="width: 40px; text-align:center;" onKeyPress="if(event.keyCode==13) for_datagrid.submit();"></div>
+				{if $page > 1}
+				<a href="javascript:" onClick="for_datagrid.page.value=1; for_datagrid.submit();" class="tooltips" title="Trang đầu tiên" style="cursor: pointer; padding-top:3px; float:left;  padding:5px;">
+					<i class="icon-fast-backward"></i>
+				</a>
+				<a class="tooltips" title="Trang trước" href="javascript:" onClick="for_datagrid.page.value={$page-1}; for_datagrid.submit();" style="cursor: pointer; float:left;  padding:5px;">
+					<i class="icon-step-backward"></i>
+				</a>
+				{else}
+				<a href="javascript:" style="float:left;  padding:5px;">
+					<i class="icon-fast-backward" style="color:#969696; float:left; padding:0 4px;"></i>
+					<i class="icon-step-backward"  style="color:#969696; float:left; padding:0 4px"></i>
+				</a>
+				{/if}<div style="float:left;"><img src="{$path}/images/grid-split.gif" border="0" />
+				{#page#}: <input class="tooltips" title="Trang hiện tại" name="page" value="{$page|default:1}" style="width: 20px; text-align:center;" onKeyPress="if(event.keyCode==13) for_datagrid.submit();">
+				{#of#} <strong>{$number_page}</strong>&nbsp;&nbsp;<img src="{$path}/images/grid-split.gif" border="0"/></div>
+				{if $page < $number_page}
+				<a title="Trang tiếp theo"  href="javascript:" onClick="for_datagrid.page.value={$page+1}; for_datagrid.submit();" 
+                style="float:left;  padding:5px;">
+                Trang tiếp theo
+				</a>
+				<a  title="Trang cuối cùng" href="javascript:" onClick="for_datagrid.page.value={$number_page}; for_datagrid.submit();" style="float:left;  padding:5px;">
+					Trang cuối cùng
+                    </a>
+				{else}
+				<a href="javascrit:" style="float:left; padding:5px;">
+					<i style="" class="icon-long-arrow-right"></i>
+					<i class="icon-fast-forward"></i>
+				</a>
+				{/if}&nbsp;
+            
+            
+            
+</div> *}
+
+
+</div></div>
+
+<input type="hidden" name="mod" value="{$smarty.get.mod}">
+<input type="hidden" name="menu_id" value="{$smarty.get.menu_id}">
+<input type="hidden" name="amod" value="{$smarty.get.amod}">
+<input type="hidden" name="atask" value="{$smarty.get.atask}">
+<input type="hidden" name="sort_by" value="{$sort_by}">
+<input type="hidden" name="sort_value" value="{$sort_value}">
+<input type="hidden" name="task" />
+</form></div>  
+                                </div>
+							</div> 
+</div></div>

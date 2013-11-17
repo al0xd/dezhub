@@ -1,0 +1,113 @@
+/* CSS Document */
+html,body{	
+	margin:0px;
+	overflow:auto;
+	font-family:verdana,helvetica,arial,sans-serif;
+	font-size:12px;	
+}
+
+table{
+	font-size:100%;		
+}
+
+
+.td_index
+{
+	width:40px;
+	text-align: left;
+	padding-right: 3px;
+	color:#000000;
+}
+
+.td_check
+{
+	width:30px;
+	text-align: left;
+	color:#000000;
+}
+
+
+.td_border
+{
+	font-weight:normal;
+	border-bottom:1px solid #999999;
+	border-left:1px solid #E1E1E1;
+}
+
+.td_border_left
+{
+	border-left:1px solid #E1E1E1;
+}
+
+.td_action
+{
+	text-align: left;
+	padding:2px;
+}
+
+.tr_mau1
+{
+	background:#EFEFDE;	
+	height:23px;
+}
+.tr_mau2
+{
+	background:#E5E5D5;
+	height:23px;
+}
+.tr_hover
+{
+	background:#E1FDF5;
+	height:23px;
+}
+
+.tr_title
+{
+	background:#BFBFB1;
+	 height:27px;	 
+	 font-weight:bold;
+}
+
+.notice_msg{	
+	 height:22px;	 
+	 font-weight:bold;
+	 padding-left:10px; 
+	 font-size:11px; 
+	 color:#FF6666;
+}
+
+.tr_paging
+{
+	background:#D6D6CB;
+	 height:30px;
+}
+
+.div_filter
+{		
+	width: 100%;
+	height: 30px;	
+	text-align: left;
+	background-color:#EFEFDE;
+}
+a{ font-family:verdana,helvetica,arial,sans-serif; font-size:100%; text-decoration:none; font-weight:normal; color:#000484;}
+a:hover{ color:#000; text-decoration:underline;}
+.over{
+	color:#003399;
+	text-decoration:underline;
+}
+
+.out{
+	color:#003399;
+}
+
+#root
+{		
+	width: 100%;
+	height: 27px;	
+	text-align: left;
+	font-weight: bold;		
+	background-color:#EFEFDE;
+	border-bottom:1px solid #EFEFDE;	
+	
+}
+

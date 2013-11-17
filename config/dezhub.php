@@ -4,7 +4,7 @@
 ******************************************************************************************   
 
   Package            : Dezhub  [ Web Application Framework ]
-  Version            : 1.0
+  Version            : 2.0.1
       
   Lead Architect     : Hung Dinh. [ dinhhungvn@gmail.com ]     
   Year               : 2013 - 2014                                                      
@@ -35,10 +35,15 @@
 ******************************************************************************************   
 */
 		
-		require_once(SITE_DIR."config/functions".____EXTPHP);	
+		require_once(SITE_DIR."config/common".____EXTPHP);		
 		require_once(SITE_DIR."config/database".____EXTPHP);		
+		require_once(SITE_DIR."config/rewriteurl".____EXTPHP);
 		
 		
+	// xu ly duong dan
+		$rewrite_url = new rewrite_url();
+		$rewrite_url->Navigation();
+	
 	
 	// Khoi tao cac thu muc co so
 	
@@ -51,7 +56,7 @@
 
 */
 		require_once(SITE_DIR."config/smarty".____EXTPHP);
-//		require_once(SITE_DIR."config/pear_quickform".____EXTPHP);
+		require_once(SITE_DIR."config/pear_quickform".____EXTPHP);
 		
 /*
 	@ Thiet lap cac lop co so  cho du lieu
@@ -69,6 +74,11 @@
 				exit();
 		}
 
+
+
+/**
+*/		
+		getDefaultLang($_GET["lang"]);
 		
 /*//
 
@@ -84,7 +94,7 @@
 // @ Common function
 
 //------------------------	
-	$oSmarty->configLoad("vn.conf");
+	$oSmarty->configLoad($_SESSION["lang_file"]);
 		if(isset($_GET['mod'])){
 			$mod = $_GET['mod'];
 		}
